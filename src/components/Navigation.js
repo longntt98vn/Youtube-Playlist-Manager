@@ -24,6 +24,7 @@ const INITIAL_STATE = {
 class Navigation extends Component {
   state = { ...INITIAL_STATE };
   googleLogin = () => {
+    console.log("abc");
     const { history } = this.props;
     auth
       .doGoogleSignIn()

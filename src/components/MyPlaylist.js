@@ -83,28 +83,31 @@ function MyPlaylist(props) {
     }
 
     const createPlaylist = () => {
-        let accessModifier = (playlistAM == 0) ? "private" : "public";
-        if (playlistAM && playlistDes && playlistTitle && videoID) {
-            let str1 = db.ref(`playlist/${accessModifier}`).push({
-                playlistDes: playlistDes,
-                playlistTitle: playlistTitle,
-                firstVideo: videoID,
-                lastVideo: videoID,
-                quantity: 1,
-                UID: UID,
-            }).getKey();
-            db.ref(`playlist/${accessModifier}/${str1}/playlistVideo/${videoID}`).set({
-                videoThumbnail: thumbnailVideo,
-                videoTitle: titleVideo,
-                nextVideo: videoID,
-                previousVideo: videoID,
-            })
-            db.ref(`users/${UID}/playlistList`).push({
-                playlistID: str1,
-                playlistAM: playlistAM,
-            })
-            // alert("Thêm mới thành công")
-        } else alert("Vui lòng điền toàn bộ thông tin");
+        if (UID) {
+            let accessModifier = (playlistAM == 0) ? "private" : "public";
+            if (playlistAM && playlistDes && playlistTitle && videoID) {
+                let str1 = db.ref(`playlist/${accessModifier}`).push({
+                    playlistDes: playlistDes,
+                    playlistTitle: playlistTitle,
+                    firstVideo: videoID,
+                    lastVideo: videoID,
+                    quantity: 1,
+                    UID: UID,
+                }).getKey();
+                db.ref(`playlist/${accessModifier}/${str1}/playlistVideo/${videoID}`).set({
+                    videoThumbnail: thumbnailVideo,
+                    videoTitle: titleVideo,
+                    nextVideo: videoID,
+                    previousVideo: videoID,
+                })
+                db.ref(`users/${UID}/playlistList`).push({
+                    playlistID: str1,
+                    playlistAM: playlistAM,
+                })
+                // alert("Thêm mới thành công")
+            } else alert("Vui lòng điền toàn bộ thông tin");
+        }else alert("Vui lòng đăng nhập để tạo playlist mới")
+
     }
 
     const deletePlaylist = (playlistIDofUser, accessModifier, idDB) => {

@@ -15,15 +15,9 @@ class LandingTable extends Component {
         }
     }
 
-    deletePlaylist() {
-        let db1 = db.ref(`users/${this.props.UID}/playlistList`);
-        console.log(this.props.idDB);
-        db1.child(this.props.idDB).remove()
-    }
-
     componentDidMount() {
-        db.ref(`playlist/public/${this.props.idDB}/firstVideo`).once("value", data => {
-            db.ref(`playlist/public/${this.props.idDB}/playlistVideo/${data.val()}`).once("value", data1 => {
+        db.ref(`playlist/public/${this.props.idDB}/firstVideo`).on("value", data => {
+            db.ref(`playlist/public/${this.props.idDB}/playlistVideo/${data.val()}`).on("value", data1 => {
                 if (data1.val()) {
                     this.setState({
                         videoID: data1.key,
@@ -33,12 +27,6 @@ class LandingTable extends Component {
                 }
             })
         })
-    }
-    getVideoID = (videoID, nextVideo) => {
-        this.setState({
-            videoID: videoID,
-            nextVideo: nextVideo
-        });
     }
 
     render() {
