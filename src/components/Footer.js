@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as routes from "../constants/routes"
+import {Link} from "react-router-dom";
 
 class Footer extends Component {
     render() {
@@ -6,16 +8,16 @@ class Footer extends Component {
             <div>
                 <footer>
                     <div className="container">
-                        <p>© Your Website 2020. All Rights Reserved.</p>
+                        <p style={{ color: "white" }}>© Your Website 2020. All Rights Reserved.</p>
                         <ul className="list-inline">
                             <li className="list-inline-item">
-                                <a href="/">Privacy</a>
+                                <Link to={routes.LANDING}>Giới thiệu</Link>
                             </li>
                             <li className="list-inline-item">
-                                <a href="/">Terms</a>
+                                <Link to={routes.LANDING}>Liên hệ</Link>
                             </li>
                             <li className="list-inline-item">
-                                <a href="/">FAQ</a>
+                                <Link to={routes.LANDING}>Góp ý</Link>
                             </li>
                         </ul>
                     </div>
