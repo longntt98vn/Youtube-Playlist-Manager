@@ -24,20 +24,15 @@ const INITIAL_STATE = {
 class Navigation extends Component {
   state = { ...INITIAL_STATE };
   googleLogin = () => {
-    console.log("abc");
     const { history } = this.props;
-    auth
-      .doGoogleSignIn()
-      .then(authUser => {
+    auth.doGoogleSignIn().then(authUser => {
         localStorage.setItem("UID", authUser.user.uid)
         db.doCreateUser(
           authUser.user.uid,
           authUser.user.displayName,
           authUser.user.email,
           authUser.user.photoURL,
-
-        )
-          .then(() => {
+        ).then(() => {
             history.push(routes.HOME); //redirects to Home Page
           })
           .catch(error => {
