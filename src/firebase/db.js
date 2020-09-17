@@ -5,7 +5,6 @@ import { db } from "./firebase";
 
 //create an user and store it at users/id path (it's an asynchronous func)
 export const doCreateUser = (id, username, email, photoURL) =>{
-  console.log(2.5);
   db.ref(`users/${id}`).on("value", data => {
     if(!data.val()){
       db.ref(`users/${id}`).set({

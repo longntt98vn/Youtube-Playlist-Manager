@@ -26,21 +26,20 @@ class Navigation extends Component {
   googleLogin = () => {
     const { history } = this.props;
     auth.doGoogleSignIn().then(authUser => {
-      console.log(1);
-        localStorage.setItem("UID", authUser.user.uid)
-        db.doCreateUser(
-          authUser.user.uid,
-          authUser.user.displayName,
-          authUser.user.email,
-          authUser.user.photoURL,
-        ).then(() => {
-          console.log(3);
-            history.push(routes.HOME); //redirects to Home Page
-          })
-          .catch(error => {
-            this.setState(byPropKey("error", error));
-          });
+      localStorage.setItem("UID", authUser.user.uid)
+      db.doCreateUser(
+        authUser.user.uid,
+        authUser.user.displayName,
+        authUser.user.email,
+        authUser.user.photoURL,
+
+      ).then(() => {
+        history.push(routes.HOME); //redirects to Home Page
       })
+        .catch(error => {
+          this.setState(byPropKey("error", error));
+        });
+    })
       .catch(error => {
         this.setState(byPropKey("error", error));
       });
@@ -91,7 +90,7 @@ class Navigation extends Component {
       <Link to={routes.LANDING}>
         <img style={{ height: "75px" }} className="icon-header" src="https://i.imgur.com/aOiIHSX.png" alt="" />
       </Link>
-      <div className="header_input" style={{ height: "35px", fontSize:"20px", backgroundColor:"white"}}>
+      <div className="header_input" style={{ height: "35px", fontSize: "20px", backgroundColor: "white" }}>
         <input  ></input>
         <div type="button" className="fa fa-search"   ></div>
 
@@ -118,7 +117,7 @@ class Navigation extends Component {
       <Link to={routes.LANDING}>
         <img style={{ height: "75px" }} className="icon-header" src="https://i.imgur.com/aOiIHSX.png" alt="" />
       </Link>
-      <div className="header_input" style={{ height: "35px", fontSize:"20px", backgroundColor:"white"}}>
+      <div className="header_input" style={{ height: "35px", fontSize: "20px", backgroundColor: "white" }}>
         <input  ></input>
         <div type="button" className="fa fa-search"   ></div>
 
