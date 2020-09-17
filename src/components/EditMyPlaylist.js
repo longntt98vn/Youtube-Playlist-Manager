@@ -3,6 +3,7 @@ import EditMyPlaylistItem from './EditMyPlaylistItem';
 import { db } from "../firebase/firebase"
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
+import { Link } from "react-router-dom";
 
 
 const UID = localStorage.getItem("UID")
@@ -19,6 +20,7 @@ function EditMyPlaylist(props) {
     const [quantity, setQuantity] = useState("");
     const [videoTitle, setVideoTitle] = useState("");
     const [titleVideo, setTitleVideo] = useState("");
+    const [firstVideoThumbnail, setFirstVideoThumbnail] = useState("");
 
     useEffect(() => {
         const db2 = db.ref(`users/${UID}/playlistList/${props.match.params.id}`);
@@ -34,12 +36,16 @@ function EditMyPlaylist(props) {
                         setQuantity(data1.val().quantity);
                         setPlaylistDes(data1.val().playlistDes);
                         setPlaylistTitle(data1.val().playlistTitle);
+
+                        db.ref(`playlist/${accessModifier}/${data.val().playlistID}/playlistVideo/${data1.val().firstVideo}/videoThumbnail`).on("value", data2 => {
+                            if (data2.val()) { setFirstVideoThumbnail(data2.val()); console.log(data2.val()); }
+                        })
                     }
                 })
                 const db3 = db.ref(`playlist/${accessModifier}/${data.val().playlistID}/playlistVideo`);
-                db3.on("value", data => {
+                db3.on("value", data1 => {
                     let array = [];
-                    data.forEach(element => {
+                    data1.forEach(element => {
                         array.push({
                             key: element.key,
                             videoID: element.val().videoID,
@@ -184,28 +190,45 @@ function EditMyPlaylist(props) {
                 db.ref(`playlist/${accessModifier}/${data.val().playlistID}/lastVideo`).set(videoID);
             }
         })
+        setThumbnailVideo("");
+        setTitleVideo("");
     }
 
     return (
         <div className="container-fluid row edit-my-playlist">
             <div className="col-5">
+                <Link to={"/videoplayer/" + playlistID + "." + firstVideo}>
+                    <div style={{ position: "relative", left: "0", top: "0" }}>
+                        <img src={firstVideoThumbnail} alt="" style={{ width: "100%", position: "relative", top: "0", left: "0" }} />
+                        <div style={{ height: "20%", width: "100%", bottom: "0", backgroundColor: "#000000cc", position: "absolute" }}>
+                            <h1 className="fa fa-play" style={{ color: "white", fontSize: "30px", padding:"3% 28% 3% 35%" }}>  Phát tất cả</h1>
+                        </div>
+                    </div>
+                </Link>
+
                 <h1 className="playlist-info" style={{ color: "white" }}> {playlistTitle}</h1>
                 <h1 className="playlist-info" style={{ color: "white" }}>{playlistDes}</h1>
                 <h1 className="playlist-info" style={{ color: "white" }}>{quantity} video</h1>
             </div>
             <div className="col-7">
-                <form >
-                    <div className="mt-2 mb-3" >
-                        <SearchBar getItem={(item) => { getItem(item) }} />
-                        <div style={{ color: "white", fontSize: "20px" }}>
-                            <SearchResult thumbnailVideo={thumbnailVideo} titleVideo={titleVideo} />
-                        </div>
-                    </div>
-                    <button type="button" className="btn btn-info" onClick={(item) => { addVideo(item) }}>Add to Playlist</button>
-                </form>
                 {getVideo()}
             </div>
 
+            <div className="dropdown button-add-playlist dropup">
+                <button className="dropup-toggle fa fa-plus" type="button" id="dropdownMenuButton" style={{ color: "#ffc107", backgroundColor: "transparent", border: "none" }} data-toggle="dropdown" ></button>
+                <div className="dropdown-menu" style={{ width: "350px", left: "-295px" }}>
+                    <form className="text-center create-playlist-table">
+                        <h3>Thêm mới Video</h3>
+                        <div className="form-group ">
+                            <label>Link video </label>
+                            <SearchBar getItem={(item) => { getItem(item) }} />
+                            <SearchResult thumbnailVideo={thumbnailVideo} titleVideo={titleVideo} />
+                            <div className="dropdown-divider"></div>
+                            <input type="reset" onClick={() => addVideo()} className="btn btn-primary btn-lg btn-block " value="Thêm Video" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

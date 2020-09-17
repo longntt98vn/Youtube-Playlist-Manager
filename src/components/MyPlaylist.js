@@ -104,6 +104,12 @@ function MyPlaylist(props) {
                     playlistID: str1,
                     playlistAM: playlistAM,
                 })
+                setPlaylistDes("");
+                setPlaylistAM("");
+                setPlaylistTitle("");
+                setVideoID("");
+                setThumbnailVideo("");
+                setTitleVideo("");
                 // alert("Thêm mới thành công")
             } else alert("Vui lòng điền toàn bộ thông tin");
         }else alert("Vui lòng đăng nhập để tạo playlist mới")
@@ -134,7 +140,6 @@ function MyPlaylist(props) {
         }
     }
     return (
-        console.log(12),
         <div className="container">
             <div className="row">
                 {getData()}
@@ -161,7 +166,7 @@ function MyPlaylist(props) {
                             <SearchBar getItem={(item) => { getItem(item) }} />
                             <SearchResult thumbnailVideo={thumbnailVideo} titleVideo={titleVideo} />
                             <div className="dropdown-divider"></div>
-                            <input type="button" onClick={() => createPlaylist()} className="btn btn-primary btn-lg btn-block " value="Thêm Playlist" />
+                            <input type="reset" onClick={() => createPlaylist()} className="btn btn-primary btn-lg btn-block " value="Thêm Playlist" />
                         </div>
                     </form>
                 </div>

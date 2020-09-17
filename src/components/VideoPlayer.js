@@ -141,10 +141,10 @@ function VideoPlayer(props) {
                     <VideoStream videoID={props.match.params.videoID} nextVideo={nextVideo} func={(params) => func(params)} playlistID={props.match.params.playlistID} ></VideoStream>
                     <p className="videoplayer-video-title">{videoTitle}</p>
                     <hr style={{ backgroundColor: "white" }} />
-                    <h2>Bình luận:</h2>
+                    <h2 style={{color:"white"}}>Bình luận:</h2>
                     <div style={{ flexWrap: "wrap", display: "flex", height: "45px" }}>
                         <input type="text" onChange={(event) => isChange(event)} className="form-control col" placeholder="Bình luận công khai ...." aria-describedby="helpId" style={{ height: "auto", fontSize: "20px" }} />
-                        <button onClick={() => pushComment()} className="col-2" className="btn btn-info">Bình luận:</button>
+                        <button onClick={() => pushComment()} className="col-2" className="btn btn-info" style={{fontSize:"17px"}}>Bình luận</button>
                     </div>
                     <hr style={{ backgroundColor: "white" }} />
                     {getComment()}
