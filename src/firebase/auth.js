@@ -12,4 +12,4 @@ export const doSignOut = () => auth.signOut();
 //#### for
 //     facebook #####
 export const doFacebookSignIn = () => auth.signInWithPopup(facebookProvider);
-export const doGoogleSignIn = () => auth.signInWithPopup(googleProvider);
+export const doGoogleSignIn = () => {auth.signInWithPopup(googleProvider);console.log(2);}

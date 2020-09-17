@@ -26,6 +26,7 @@ class Navigation extends Component {
   googleLogin = () => {
     const { history } = this.props;
     auth.doGoogleSignIn().then(authUser => {
+      console.log(1);
         localStorage.setItem("UID", authUser.user.uid)
         db.doCreateUser(
           authUser.user.uid,
@@ -33,6 +34,7 @@ class Navigation extends Component {
           authUser.user.email,
           authUser.user.photoURL,
         ).then(() => {
+          console.log(3);
             history.push(routes.HOME); //redirects to Home Page
           })
           .catch(error => {
