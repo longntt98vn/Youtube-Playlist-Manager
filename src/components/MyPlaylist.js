@@ -17,7 +17,6 @@ function MyPlaylist(props) {
     const [dataFromDB, setDataFromDB] = useState([]);
 
     useEffect(() => {
-        console.log(12);
         const db1 = db.ref(`users/${UID}/playlistList`)
         db1.on("value", data1 => {
             if (data1.val()) {
@@ -84,35 +83,36 @@ function MyPlaylist(props) {
 
     const createPlaylist = () => {
         if (UID) {
-            let accessModifier = (playlistAM == 0) ? "private" : "public";
-            if (playlistAM && playlistDes && playlistTitle && videoID) {
-                let str1 = db.ref(`playlist/${accessModifier}`).push({
-                    playlistDes: playlistDes,
-                    playlistTitle: playlistTitle,
-                    firstVideo: videoID,
-                    lastVideo: videoID,
-                    quantity: 1,
-                    UID: UID,
-                }).getKey();
-                db.ref(`playlist/${accessModifier}/${str1}/playlistVideo/${videoID}`).set({
-                    videoThumbnail: thumbnailVideo,
-                    videoTitle: titleVideo,
-                    nextVideo: videoID,
-                    previousVideo: videoID,
-                })
-                db.ref(`users/${UID}/playlistList`).push({
-                    playlistID: str1,
-                    playlistAM: playlistAM,
-                })
-                setPlaylistDes("");
-                setPlaylistAM("");
-                setPlaylistTitle("");
-                setVideoID("");
-                setThumbnailVideo("");
-                setTitleVideo("");
-                // alert("Thêm mới thành công")
-            } else alert("Vui lòng điền toàn bộ thông tin");
-        }else alert("Vui lòng đăng nhập để tạo playlist mới")
+            if (playlistDes.replace(/\s\s+/g, ' ') != " " && playlistTitle.replace(/\s\s+/g, ' ') != " ") {
+                let accessModifier = (playlistAM == 0) ? "private" : "public";
+                if (playlistAM && playlistDes && playlistTitle && videoID) {
+                    let str1 = db.ref(`playlist/${accessModifier}`).push({
+                        playlistDes: playlistDes,
+                        playlistTitle: playlistTitle,
+                        firstVideo: videoID,
+                        lastVideo: videoID,
+                        quantity: 1,
+                        UID: UID,
+                    }).getKey();
+                    db.ref(`playlist/${accessModifier}/${str1}/playlistVideo/${videoID}`).set({
+                        videoThumbnail: thumbnailVideo,
+                        videoTitle: titleVideo,
+                        nextVideo: videoID,
+                        previousVideo: videoID,
+                    })
+                    db.ref(`users/${UID}/playlistList`).push({
+                        playlistID: str1,
+                        playlistAM: playlistAM,
+                    })
+                    setPlaylistDes("");
+                    setPlaylistAM("");
+                    setPlaylistTitle("");
+                    setVideoID("");
+                    setThumbnailVideo("");
+                    setTitleVideo("");
+                } else alert("Vui lòng điền toàn bộ thông tin");
+            }
+        } else alert("Vui lòng đăng nhập để tạo playlist mới")
 
     }
 

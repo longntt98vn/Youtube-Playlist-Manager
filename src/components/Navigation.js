@@ -26,7 +26,8 @@ class Navigation extends Component {
   googleLogin = () => {
     const { history } = this.props;
     auth.doGoogleSignIn().then(authUser => {
-      localStorage.setItem("UID", authUser.user.uid)
+        localStorage.setItem("UID", authUser.user.uid);
+      
       db.doCreateUser(
         authUser.user.uid,
         authUser.user.displayName,
