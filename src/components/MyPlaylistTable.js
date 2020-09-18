@@ -50,8 +50,8 @@ class MyPlaylistTable extends Component {
 
     componentDidMount() {
 
-        db.ref(`playlist/${this.props.accessModifier}/${this.props.idDB}/firstVideo`).once("value", data => {
-            db.ref(`playlist/public/${this.props.idDB}/playlistVideo/${data.val()}`).once("value", data1 => {
+        db.ref(`playlist/${this.props.accessModifier}/${this.props.idDB}/firstVideo`).on("value", data => {
+            db.ref(`playlist/public/${this.props.idDB}/playlistVideo/${data.val()}`).on("value", data1 => {
                 if (data1.val()) {
                     this.setState({
                         videoID: data1.key,

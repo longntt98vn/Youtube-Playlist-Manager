@@ -208,7 +208,7 @@ function EditMyPlaylist(props) {
 
                 <h1 className="playlist-info" style={{ color: "white" }}> {playlistTitle}</h1>
                 <h1 className="playlist-info" style={{ color: "white" }}>{playlistDes}</h1>
-                <h1 className="playlist-info" style={{ color: "white" }}>{quantity} video</h1>
+                <h1 className="playlist-info" style={{ color: "white" }}>{quantity} video </h1>
             </div>
             <div className="col-7">
                 {getVideo()}
